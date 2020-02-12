@@ -26,8 +26,6 @@ function saveRecord(record) {
     setStore.add(record);
 }
 
-
-
 function checkDatabase() {
     const transaction = db.transaction(["set"], "readwrite");
     const setStore = transaction.objectStore("set");
@@ -45,7 +43,6 @@ function checkDatabase() {
             })
                 .then(response => response.json())
                 .then(() => {
-
                     const transaction = db.transaction(["set"], "readwrite");
                     const setStore = transaction.objectStore("set");
                     setStore.clear();
