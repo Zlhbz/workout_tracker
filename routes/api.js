@@ -1,23 +1,24 @@
 const router = require("express").Router();
-const Workout = require("../models/workout.js");
+const db = require("../models");
 const path = require("path");
+console.log(db);
 
 
-router.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/index.html"));
-})
-router.get("/exercise", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/exercise.html"));
-})
-router.get("/stats", (req, res) => {
-    res.sendFile(path.join(__dirname, "../public/stats.html"));
-})
+// router.get("/", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../public/index.html"));
+// })
+// router.get("/exercise", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../public/exercise.html"));
+// })
+// router.get("/stats", (req, res) => {
+//     res.sendFile(path.join(__dirname, "../public/stats.html"));
+// })
 
 
 
-router.get("/api/workouts", ({ body }, res) => {
+router.get("/api/workouts", (req, res) => {
     console.log("Returning workouts!")
-    Workout.find({})
+    db.Workout.find({})
         .then(data_workout => {
             res.json(data_workout);
         })
@@ -26,9 +27,9 @@ router.get("/api/workouts", ({ body }, res) => {
         });
 });
 
-router.post("/api/workouts/:id", ({ body }, res) => {
+router.post("/api/workouts", ({ body }, res) => {
     console.log("working")
-    Workout.create(body)
+    db.Workout.create(body)
         .then(data_workout => {
             console.log(data_workout);
             res.json(data_workout);
@@ -41,22 +42,24 @@ router.post("/api/workouts/:id", ({ body }, res) => {
 
 router.get("/api/workouts/range", ({ body }, res) => {
     console.log("working range");
-    Workout.find({}).then(data => {
+    db.Workout.find({}).then(data => {
         res.json(data)
     })
 });
 
 
 router.put("/api/workouts/:id", (req, res) => {
-    Workout.findOne({
-        where: {
-            id: req.params.id
-        }
-    }).then(function (data_workout) {
-        res.json(data_workout);
-    });
+    // console.log("working on /api/workouts/:id!");
+    console.log(req.params.id);
+    db.Workout.update(
+        { _id: req.params.id },
+        { $push: { exercises: req.body } }
 
+    ).then(data => {
+        console.log(data);
+
+        res.json(data)
+    })
 });
-
 
 module.exports = router;
