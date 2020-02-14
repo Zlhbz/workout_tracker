@@ -1,19 +1,7 @@
 const router = require("express").Router();
 const db = require("../models");
-const path = require("path");
+
 console.log(db);
-
-
-// router.get("/", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../public/index.html"));
-// })
-// router.get("/exercise", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../public/exercise.html"));
-// })
-// router.get("/stats", (req, res) => {
-//     res.sendFile(path.join(__dirname, "../public/stats.html"));
-// })
-
 
 
 router.get("/api/workouts", (req, res) => {
@@ -49,8 +37,8 @@ router.get("/api/workouts/range", ({ body }, res) => {
 
 
 router.put("/api/workouts/:id", (req, res) => {
-    // console.log("working on /api/workouts/:id!");
-    console.log(req.params.id);
+    console.log("working on /api/workouts/:id!");
+    console.log("Does put call work? " + req.params.id);
     db.Workout.update(
         { _id: req.params.id },
         { $push: { exercises: req.body } }
