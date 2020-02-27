@@ -7,8 +7,6 @@ const API = {
   },
   async addExercise(data) {
     console.log("Adding excercise:" + JSON.stringify(data))
-    console.log("Location is:" + location.search)
-    console.log(location);
     const id = location.search.split("=")[1];
 
 

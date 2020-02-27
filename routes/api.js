@@ -5,7 +5,7 @@ console.log(db);
 
 
 router.get("/api/workouts", (req, res) => {
-    console.log("Returning workouts!")
+    console.log("/api/workouts works " + "GET")
     db.Workout.find({})
         .then(data_workout => {
             res.json(data_workout);
@@ -15,8 +15,19 @@ router.get("/api/workouts", (req, res) => {
         });
 });
 
+router.get("/api/workouts/:id", (req, res) => {
+    console.log("/api/workouts/id works " + "GET")
+    db.Workout.findById(req.params.id)
+        .then(data_workout => {
+            res.json(data_workout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
 router.post("/api/workouts", ({ body }, res) => {
-    console.log("working")
+    console.log("/api/workouts works " + "POST")
     db.Workout.create(body)
         .then(data_workout => {
             console.log(data_workout);
@@ -28,16 +39,9 @@ router.post("/api/workouts", ({ body }, res) => {
         });
 });
 
-router.get("/api/workouts/range", ({ body }, res) => {
-    console.log("working range");
-    db.Workout.find({}).then(data => {
-        res.json(data)
-    })
-});
-
 
 router.put("/api/workouts/:id", (req, res) => {
-    console.log("working on /api/workouts/:id!");
+    console.log("/api/workouts/id works " + "PUT");
     console.log("Does put call work? " + req.params.id);
     db.Workout.update(
         { _id: req.params.id },
