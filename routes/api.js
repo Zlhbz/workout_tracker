@@ -26,6 +26,17 @@ router.get("/api/workouts/:id", (req, res) => {
         });
 });
 
+router.get("/api/workouts/range", (req, res) => {
+    console.log("/api/workouts/range works " + "GET")
+    db.Workout.find({})
+        .then(data_workout => {
+            res.json(data_workout);
+        })
+        .catch(err => {
+            res.json(err);
+        });
+});
+
 router.post("/api/workouts", ({ body }, res) => {
     console.log("/api/workouts works " + "POST")
     db.Workout.create(body)
